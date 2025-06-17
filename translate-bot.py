@@ -20,7 +20,12 @@ channel=["it-log","it-support"]
 last_id=""
 translate_breake="\n\n\n\n\n"
 
+def clean_text_for_lang_detect(text):
+    # Remove all @xxx.xxx (email or mentions)
+    return re.sub(r'@\S+', '', text)
+
 def guess_source_language(text):
+    text = clean_text_for_lang_detect(text)  # clean before detection
     # 文単位で分割（句点や改行で分割）
     sentences = re.split(r'[。．.!?\n]+', text)
     sentences = [s.strip() for s in sentences if s.strip()]
